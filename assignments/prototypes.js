@@ -7,7 +7,7 @@
   
   Each constructor function has unique properties and methods that are defined in their block comments below:
 */
-  
+
 /*
   === GameObject ===
   * createdAt
@@ -16,6 +16,25 @@
   * destroy() // prototype method that returns: `${this.name} was removed from the game.`
 */
 
+function GameObject(attributes) {
+  (this.createdAt = attributes.createdAt),
+    (this.name = attributes.name),
+    (this.dimensions = attributes.dimensions),
+    console.log(this);
+}
+
+GameObject.prototype.destroy = function() {
+  return `${this.name} was removed from the game`;
+};
+
+const gameInfoOne = new GameObject({
+  createdAt: 5890,
+  name: "Nick",
+  dimensions: 500
+});
+
+// console.log(gameInfoOne.destroy());
+
 /*
   === CharacterStats ===
   * healthPoints
@@ -23,6 +42,17 @@
   * should inherit destroy() from GameObject's prototype
 */
 
+function CharacterStats (playerStats) {
+  this.healthPoints = playerStats.healthPoints,
+  GameObject.call(this, playerStats);
+}
+ CharacterStats.prototype = Object.create(GameObject.prototype);
+ 
+ CharacterStats.prototype.takeDamage = function() {
+  return `${this.name} took damage.`;
+ }
+ 
+ console.log(gameInfoOne.takeDamage());
 /*
   === Humanoid (Having an appearance or character resembling that of a human.) ===
   * team
@@ -32,12 +62,12 @@
   * should inherit destroy() from GameObject through CharacterStats
   * should inherit takeDamage() from CharacterStats
 */
- 
+
 /*
-  * Inheritance chain: GameObject -> CharacterStats -> Humanoid
-  * Instances of Humanoid should have all of the same properties as CharacterStats and GameObject.
-  * Instances of CharacterStats should have all of the same properties as GameObject.
-*/
+ * Inheritance chain: GameObject -> CharacterStats -> Humanoid
+ * Instances of Humanoid should have all of the same properties as CharacterStats and GameObject.
+ * Instances of CharacterStats should have all of the same properties as GameObject.
+ */
 
 // Test you work by un-commenting these 3 objects and the list of console logs below:
 
@@ -104,7 +134,7 @@
   console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
 */
 
-  // Stretch task: 
-  // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
-  // * Give the Hero and Villains different methods that could be used to remove health points from objects which could result in destruction if health gets to 0 or drops below 0;
-  // * Create two new objects, one a villain and one a hero and fight it out with methods!
+// Stretch task:
+// * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.
+// * Give the Hero and Villains different methods that could be used to remove health points from objects which could result in destruction if health gets to 0 or drops below 0;
+// * Create two new objects, one a villain and one a hero and fight it out with methods!
